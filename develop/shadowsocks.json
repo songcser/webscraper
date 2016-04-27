@@ -1,0 +1,8 @@
+{
+"server":"",
+"server_port":5298,
+"local_port":1080,
+"password":"*******",
+"timeout":600,
+"method":"rc4-md5"
+}

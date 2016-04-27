@@ -1,0 +1,5 @@
+git+git://git.coding.net/soundlife/boto.git@bfa358d863e73ad38455437f11d141001c458184#egg=boto
+shadowsocks
+Scrapy
+scrapyd
+scrapyd-client
