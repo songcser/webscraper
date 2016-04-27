@@ -10,12 +10,10 @@ from webscraper.items import FileItem
 class InstagramSpider(scrapy.Spider):
     name = "instagram"
     allowed_domains = get_project_settings().get("ALLOWED_DOMAINS")
-    source_type = get_project_settings().get("SOURCE_TYPE")
 
     def __init__(self, *args, **kwargs):
         super(InstagramSpider, self).__init__(*args, **kwargs)
         settings = get_project_settings()
-        self.source_type = settings.get("SOURCE_TYPE")
         self.users = []
 
         for line in open(settings.get("USER_LIST")):
