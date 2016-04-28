@@ -5,12 +5,12 @@ import scrapy
 from urllib import quote
 from boto.aliyun.oss.connection import OSSConnection
 from boto.aliyun.oss.key import Key
-from scrapy.contrib.pipeline.files import FilesPipeline
+from scrapy.pipelines.files import FilesPipeline
 from scrapy.exceptions import DropItem
 
-ALIYUN_ACCESS_KEY_ID = os.environ.get("ALIYUN_ACCESS_KEY_ID", "NXKLh9N8k4pMFNxS")
-ALIYUN_SECRET_ACCESS_KEY = os.environ.get("ALIYUN_SECRET_ACCESS_KEY", "N6LvCE3U23Rgxz5XItLVzZLlBNpbGW")
-ALIYUN_STORAGE_BUCKET_NAME = os.environ.get("ALIYUN_STORAGE_BUCKET_NAME", "soundlife-test")
+ALIYUN_ACCESS_KEY_ID = os.environ.get("ALIYUN_ACCESS_KEY_ID")
+ALIYUN_SECRET_ACCESS_KEY = os.environ.get("ALIYUN_SECRET_ACCESS_KEY")
+ALIYUN_STORAGE_BUCKET_NAME = os.environ.get("ALIYUN_STORAGE_BUCKET_NAME")
 OSS_PREFIX = os.environ.get("OSS_PREFIX", "file_test")
 
 
