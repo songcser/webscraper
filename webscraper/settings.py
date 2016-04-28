@@ -89,10 +89,10 @@ RETRY_TIMES = 5
 RETRY_HTTP_CODES = [500, 503, 504, 400, 404, 408]
 
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
     # Fix path to this module
     'webscraper.httpproxy.HttpProxy': 100,
-    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
 ITEM_PIPELINES = {'webscraper.pipelines.OSSUploadFilesPipeline': 1}
 FILES_STORE = 'file'
@@ -106,5 +106,5 @@ DOWNLOAD_HANDLERS = {'s3': None, }
 # ...
 PROXY_LIST = 'develop/proxy_list.txt'
 USER_LIST = 'develop/users.txt'
-ALLOWED_DOMAINS = ["instagram.com", "localhost", "soundlifegroup.com", "dmxserver"]
+ALLOWED_DOMAINS = ["instagram.com", "localhost"]
 SOURCE_TYPE = {"instagram": "instagram", "weibo": "weibo", "wechat":"wechat"}

@@ -20,6 +20,7 @@ class OSSUploadFilesPipeline(FilesPipeline):
         for file_url in item['file_urls']:
             req = scrapy.Request(file_url)
             req.meta["proxy"] = item["proxy"]
+            req.meta["retry"] = 0
             yield req
 
     def item_completed(self, results, item, info):

@@ -24,8 +24,7 @@ class HttpProxy(object):
                 user_pass = ''
 
             self.proxies[parts.group(1) + parts.group(3)] = user_pass
-
-        fin.close()
+        print(self.proxies)
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -35,10 +34,8 @@ class HttpProxy(object):
         # Don't overwrite with a random one (server-side state for IP)
         if 'proxy' not in request.meta:
             return
-
         proxy_address = random.choice(self.proxies.keys())
         proxy_user_pass = self.proxies[proxy_address]
-
         request.meta['proxy'] = proxy_address
         if proxy_user_pass:
             basic_auth = 'Basic ' + base64.encodestring(proxy_user_pass)
@@ -48,9 +45,17 @@ class HttpProxy(object):
         if 'proxy' not in request.meta:
             return
         proxy = request.meta['proxy']
-        log.msg('Removing failed proxy <%s>, %d proxies left' % (
-            proxy, len(self.proxies)))
-        try:
-            del self.proxies[proxy]
-        except ValueError:
-            pass
+        log.msg('Http proxy failed <%s>, %d proxies left' % (proxy, len(self.proxies)))
+        if "retry" in request.meta["proxy"]:
+            retry = int(request.meta["retry"])
+            print("------------------>", retry)
+            if retry < 10:
+                log.msg('Retry Http proxy <%s>, %d proxies left' % (proxy, len(self.proxies)))
+                request.meta["retry"] = retry + 1
+                return request
+            else:
+                log.msg('Removing failed proxy <%s>, %d proxies left' % (proxy, len(self.proxies)))
+                try:
+                    del self.proxies[proxy]
+                except ValueError:
+                    pass

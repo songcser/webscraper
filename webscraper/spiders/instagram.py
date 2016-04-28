@@ -22,11 +22,11 @@ class InstagramSpider(scrapy.Spider):
 
     def start_requests(self):
         requests = []
-        print(self.users)
         for username in self.users:
             req = scrapy.Request("https://www.instagram.com/%s/" % username,
                              callback=self.instagram_parse)
             req.meta['proxy'] = True
+            req.meta["retry"] = 0
             yield req
 
     def instagram_parse(self, response):
@@ -37,17 +37,16 @@ class InstagramSpider(scrapy.Spider):
             title = ""
             if "caption" in n:
                 title = n["caption"]
-            mediaType = "image"
             filename = datetime.now().strftime('%y%m%d%H%M%S') + str(random.randint(0, 1000))
             thumb = "%s/img/%s" % (1, filename)
             storage = ""
             if n["is_video"]:
                 storage = "%s/vod/%s" % (1, filename)
-                mediaType = "vod"
                 url = "https://www.instagram.com/p/%s/?taken-by=%s&__a=1" % (n["code"], u["username"])
                 req = scrapy.Request(url, callback=self.get_instagram_video)
                 req.meta["filename"] = filename+".mp4"
                 req.meta["proxy"] = True
+                req.meta["retry"] = 0
                 req.meta["storage"] = storage
                 yield req
             item = FileItem()
